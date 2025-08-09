@@ -34,7 +34,7 @@ export default function PopulationChart() {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         console.error('fetch population-growth failed:', err);
         setLoading(false);
       });
