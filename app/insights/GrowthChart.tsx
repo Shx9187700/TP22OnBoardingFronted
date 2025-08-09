@@ -34,7 +34,7 @@ export default function GrowthChart() {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         console.error('fetch car-ownership failed:', err);
         setLoading(false);
       });
