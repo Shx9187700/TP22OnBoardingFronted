@@ -33,12 +33,13 @@ export default function InsightsPage() {
     fetch(`${base}/api/insights/summary`, { cache: 'no-store' })
       .then(res => res.json())
       .then(res => {
-        if (res.success) {
+        if (res.success && res?.data) {
           setInsightsData(res.data);
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error('fetch insights summary failed:', err);
         setLoading(false);
       });
   }, []);
