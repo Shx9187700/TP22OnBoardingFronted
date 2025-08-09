@@ -28,7 +28,9 @@ export default function InsightsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/insights/summary')
+    const base =
+      process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000';
+    fetch(`${base}/api/insights/summary`, { cache: 'no-store' })
       .then(res => res.json())
       .then(res => {
         if (res.success) {
