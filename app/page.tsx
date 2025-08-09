@@ -30,7 +30,7 @@ export default function Home() {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         console.error('fetch parking stats overview failed:', err);
         setLoading(false);
       });
