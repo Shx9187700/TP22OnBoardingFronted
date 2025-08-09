@@ -62,7 +62,7 @@ export default function TrendsChart({ area, timeFrame }: TrendsChartProps) {
         }
         setLoading(false);
       })
-      .catch(err => {
+      .catch(err) => {
         console.error('fetch trends failed:', err);
         setError('Failed to load data');
         setLoading(false);
