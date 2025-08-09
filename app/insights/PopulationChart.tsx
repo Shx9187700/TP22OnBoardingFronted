@@ -24,15 +24,18 @@ export default function PopulationChart() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/insights/population-growth')
+    const base =
+      process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000';
+    fetch(`${base}/api/insights/population-growth`, { cache: 'no-store' })
       .then(res => res.json())
       .then(res => {
-        if (res.success) {
+        if (res.success&& res?.data?.population) {
           setPopulationData(res.data.population);
         }
         setLoading(false);
       })
       .catch(() => {
+        console.error('fetch population-growth failed:', err);
         setLoading(false);
       });
   }, []);
