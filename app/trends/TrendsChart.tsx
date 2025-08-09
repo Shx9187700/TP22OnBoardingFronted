@@ -49,25 +49,26 @@ export default function TrendsChart({ area, timeFrame }: TrendsChartProps) {
 
   useEffect(() => {
     setLoading(true);
-    setError(null);
-    const base =
-      process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000';
-    fetch(`${base}/api/trends/${area}?timeFrame=${timeFrame}`, { cache: 'no-store' })
-      .then(res => res.json())
-      .then(res => {
-        if (res.success && res?.data) {
-          setTrendData(res.data);
-        } else {
-          setError('Failed to load data');
-        }
-        setLoading(false);
-      })
-      .catch(err) => {
-        console.error('fetch trends failed:', err);
+  setError(null);
+  const base =
+    process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000';
+
+  fetch(`${base}/api/trends/${area}?timeFrame=${timeFrame}`, { cache: 'no-store' })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res?.success && res?.data) {
+        setTrendData(res.data);
+      } else {
         setError('Failed to load data');
-        setLoading(false);
-      });
-  }, [area, timeFrame]);
+      }
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error('fetch trends failed:', err);
+      setError('Failed to load data');
+      setLoading(false);
+    });
+}, [area, timeFrame]);
 
   if (loading) return <div className="p-6">Loading...</div>;
   if (error) return <div className="p-6 text-red-500">{error}</div>;
