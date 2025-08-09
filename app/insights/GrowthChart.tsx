@@ -24,15 +24,18 @@ export default function GrowthChart() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/insights/car-ownership')
+    const base =
+      process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000';
+    fetch(`${base}/api/insights/car-ownership`, { cache: 'no-store' })
       .then(res => res.json())
       .then(res => {
-        if (res.success) {
+        if (res.success&& res?.data?.carOwnership) {
           setCarOwnershipData(res.data.carOwnership);
         }
         setLoading(false);
       })
       .catch(() => {
+        console.error('fetch car-ownership failed:', err);
         setLoading(false);
       });
   }, []);
