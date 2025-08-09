@@ -20,15 +20,18 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/parking/stats/overview')
+    const base =
+      process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000';
+    fetch(`${base}/api/parking/stats/overview`, { cache: 'no-store' })
       .then(res => res.json())
       .then(res => {
-        if (res.success) {
+        if (res.success && res?.data) {
           setStats(res.data);
         }
         setLoading(false);
       })
       .catch(() => {
+        console.error('fetch parking stats overview failed:', err);
         setLoading(false);
       });
   }, []);
